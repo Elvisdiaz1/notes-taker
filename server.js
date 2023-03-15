@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path");
 const notes = require("./db/db.json");
-const { writeFile } = require("fs.promises");
+const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -20,43 +21,34 @@ app.get("/", (req, res) => {
 app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
+app.get("/api/notes", (req, res) => {
+  res.json(notes);
+});
 
 // POST Route to create notes at "/notes"
-app.post("/notes", (req, res) => {
-  res.json(req.body);
+app.post("/api/notes", (req, res) => {
+  console.info(`${req.method} request received to add a review`);
+
+  // Destructuring assignment for the items in req.body
   const { title, text } = req.body;
-  const newNote = {
-    title,
-    text,
-  };
-  notes.push(newNote);
-  // fs.readFile('./db/db.json', 'utf8', (err, data) => {
-  //   if (err) {
-  //     console.error(err);
-  //   } else {
-  //     // Convert string into JSON object
-  //     const parsedReviews = JSON.parse(data);
+  if (title && text) {
+    const newNote = {
+      title,
+      text,
+      id: uuidv4(),
+    };
 
-  //     // Add a new review
-  //     parsedReviews.push(newReview);
+    // Obtain existing reviews
 
-  //     // Write updated reviews back to the file
-  //     fs.writeFile(
-  //       './db/reviews.json',
-  //       JSON.stringify(parsedReviews, null, 4),
-  //       (writeErr) =>
-  //         writeErr
-  //           ? console.error(writeErr)
-  //           : console.info('Successfully updated reviews!')
-  //     );
-  //   }
-  // });
-  const noteJSON = JSON.stringify(notes, null, 2);
-  writeFile("/db.json", noteJSON).then(() => {
-    // send back confirmation that todo was updated
-    res.json("successfully update");
-  });
-  res.json(newNote);
+    // Add a new review
+
+    // Write updated reviews back to the file
+    fs.writeFile("./db/db.json", JSON.stringify(notes, null, 4), (writeErr) =>
+      writeErr
+        ? console.error(writeErr)
+        : console.info("Successfully updated notes!")
+    );
+  }
 });
 
 app.listen(PORT, () => {
