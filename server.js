@@ -39,16 +39,36 @@ app.post("/api/notes", (req, res) => {
     };
 
     // Obtain existing reviews
+    fs.readFile("./db/db.json", "utf8", (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        // Convert string into JSON object
+        const parsedNotes = JSON.parse(data);
 
-    // Add a new review
+        // Add a new review
+        parsedNotes.push(newNote);
 
-    // Write updated reviews back to the file
-    fs.writeFile("./db/db.json", JSON.stringify(notes, null, 4), (writeErr) =>
-      writeErr
-        ? console.error(writeErr)
-        : console.info("Successfully updated notes!")
-    );
-  }
+        // Write updated reviews back to the file
+        fs.writeFile(
+          "./db/db.json",
+          JSON.stringify(parsedNotes, null, 4),
+          (writeErr) =>
+            writeErr
+              ? console.error(writeErr)
+              : console.info("Successfully updated notes!")
+        );
+      }
+    });
+
+    const response = {
+      status: "success",
+      body: newNote,
+    };
+
+    console.log(response);
+    res.status(201).json(response);
+  } else res.status(500).json("Error in posting notes");
 });
 
 app.listen(PORT, () => {
