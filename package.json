@@ -13,7 +13,8 @@
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
     "fs.promises": "^0.1.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.21"
