@@ -1,21 +1,14 @@
 [
-    {
-        "title": "Test Title",
-        "text": "Test text"
-    },
-    {
-        "title": "test apple",
-        "text": "test t ",
-        "id": "2e7f7fab-79ad-4be5-97be-c359e526d971"
-    },
-    {
-        "title": "test banana",
-        "text": "test t ",
-        "id": "4e4a42a8-c573-4e69-843d-24d7e521b318"
-    },
-    {
-        "title": "test",
-        "text": "happy test",
-        "id": "bf0d5634-9bc9-4399-b154-5f031e8b4f82"
-    }
+  {
+    "title": "Text Mom",
+    "text": "Tell Mom about appointments"
+  },
+  {
+    "title": "Pay Rent",
+    "text": "Need to pay monthly rent"
+  },
+  {
+    "title": "Go to Supermarket",
+    "text": "Need to buy food"
+  }
 ]
